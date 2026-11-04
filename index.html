@@ -7,7 +7,7 @@
 <title>PowerPoint accessible</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
 <style>
 /* Mise en page : une colonne de lecture ; chaque règle = texte à gauche,
    diapositive d'exemple à droite (empilés sur téléphone). Palette Uni'Access. */
@@ -30,6 +30,40 @@
   color-scheme: light;
 }
 
+html { scroll-padding-top: 5rem; }
+:root[data-contraste="renforce"] {
+  --fond: #FFFFFF; --surface: #F2F2F2; --texte: #000000; --doux: #000000; --titre: #000000;
+  --bleu: #003A70; --bord: #000000; --non: #7A0F3E; --non-fond: #FBE6EF; --oui: #0F4D1A; --oui-fond: #E2F1E4; --focus: #8A4500;
+}
+:root[data-contraste="inverse"] {
+  --fond: #0F1722; --surface: #172233; --texte: #E8EDF3; --doux: #B3BECB; --titre: #F2F5F9;
+  --bleu: #7DB6EE; --bord: #2E3D52; --non: #F29BBD; --non-fond: #3A1A28; --oui: #8FD39B; --oui-fond: #16301C;
+  --focus: #FFB366; color-scheme: dark;
+}
+.barre {
+  position: sticky; top: 0; z-index: 4; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
+  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding: 10px max(16px, env(safe-area-inset-left, 0px));
+  background: var(--fond); border-bottom: 1px solid var(--bord);
+}
+.barre-bouton span { font-weight: 700; margin-right: 4px; }
+.panneau {
+  width: min(26rem, 100vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0; padding: 0; border: 0;
+  color: var(--texte); background: var(--fond); overflow-y: auto; font-family: var(--police);
+}
+.panneau--gauche { margin-right: auto; border-right: 1px solid var(--bord); }
+.panneau--droite { margin-left: auto; border-left: 1px solid var(--bord); }
+.panneau::backdrop { background: rgba(0, 0, 0, .55); }
+.panneau-int { display: grid; gap: calc(var(--pas) * 3); min-height: 100%; align-content: start; padding: calc(var(--pas) * 2.5); }
+.panneau-tete { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.panneau-tete h2 { font-size: 1.4rem; }
+.reglages { display: grid; gap: calc(var(--pas) * 2.5); }
+.reglage { display: grid; gap: 6px; margin: 0; padding: 0 0 calc(var(--pas) * 2); border: 0; border-bottom: 1px solid var(--bord); }
+.reglage legend { padding: 0; margin-bottom: 6px; font-weight: 700; }
+.reglage label { display: flex; align-items: center; gap: 10px; min-height: 28px; cursor: pointer; }
+.reglage input[type="radio"] { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--bleu); }
+.reglage-couleur { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.reglage-couleur input { width: 48px; height: 34px; padding: 0; border: 1px solid var(--bord); border-radius: 6px; background: var(--fond); cursor: pointer; }
+.reglage-note { font-size: .9rem; color: var(--doux); }
 *, *::before, *::after { box-sizing: border-box; }
 body {
   font-family: var(--police); font-size: 1.0625rem; line-height: 1.6;
@@ -201,8 +235,6 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
 .contraste-resultat .ok { color: var(--oui); } .contraste-resultat .ko { color: var(--non); }
 
 /* --- sommaire façon traitement de texte --- */
-.toc { margin-top: calc(var(--pas) * 5); }
-.toc h2 { font-size: 1.4rem; margin-bottom: calc(var(--pas) * 2); }
 .toc ol { list-style: none; margin: 0; padding: 0; }
 .toc > ol > li + li { margin-top: calc(var(--pas) * 1.5); }
 .toc a { display: flex; align-items: baseline; gap: 8px; color: var(--texte); text-decoration: none; padding: 3px 0; }
@@ -272,11 +304,58 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 </style>
+<script>
+(function () {
+  var CLE = 'ppt-accessible-affichage', racine = document.documentElement;
+  var POLICES = {
+    arial: "Arial, Helvetica, sans-serif",
+    verdana: "Verdana, Geneva, sans-serif",
+    atkinson: "'Atkinson Hyperlegible', Verdana, sans-serif"
+  };
+  function appliquer(p) {
+    racine.style.fontSize = p.taille && p.taille !== '100' ? p.taille + '%' : '';
+    if (p.contraste && p.contraste !== 'normal') racine.setAttribute('data-contraste', p.contraste);
+    else racine.removeAttribute('data-contraste');
+    ['--texte', '--doux', '--titre'].forEach(function (v) {
+      if (p.couleur) racine.style.setProperty(v, p.couleur); else racine.style.removeProperty(v);
+    });
+    if (POLICES[p.police]) racine.style.setProperty('--police', POLICES[p.police]);
+    else racine.style.removeProperty('--police');
+  }
+  function lire() {
+    try { return JSON.parse(localStorage.getItem(CLE)) || {}; } catch (e) { return {}; }
+  }
+  function ecrire(p) {
+    try { localStorage.setItem(CLE, JSON.stringify(p)); } catch (e) {}
+  }
+  appliquer(lire());
+  window.affichagePage = { appliquer: appliquer, lire: lire, ecrire: ecrire };
+})();
+</script>
 </head>
 <body>
 
 
 <a class="evitement" href="#regles">Aller aux règles</a>
+<div class="barre">
+  <button type="button" class="bouton barre-bouton" id="ouvrir-sommaire" aria-haspopup="dialog"><span aria-hidden="true">☰</span> Sommaire</button>
+  <button type="button" class="bouton barre-bouton" id="ouvrir-accessibilite" aria-haspopup="dialog"><span aria-hidden="true">Aa</span> Accessibilité</button>
+</div>
+<dialog class="panneau panneau--gauche" id="panneau-sommaire" aria-labelledby="toc-titre"><div class="panneau-int">
+  <div class="panneau-tete"><h2 id="toc-titre">Sommaire</h2><button type="button" class="bouton panneau-fermer">Fermer</button></div>
+  <nav class="toc" aria-labelledby="toc-titre"><ol><li><a href="#contexte" class="toc-partie"><span class="toc-n">1.</span><span class="toc-t">Contexte</span></a></li><li><a href="#regles" class="toc-partie"><span class="toc-n">2.</span><span class="toc-t">Les règles d’accessibilité pour une présentation</span></a><ol><li><a href="#lisibilite"><span class="toc-n">2.1</span><span class="toc-t">Rendre le texte lisible</span></a></li><li><a href="#reperes"><span class="toc-n">2.2</span><span class="toc-t">Donner des repères</span></a></li><li><a href="#contenu"><span class="toc-n">2.3</span><span class="toc-t">Alléger le contenu</span></a></li><li><a href="#oral"><span class="toc-n">2.4</span><span class="toc-t">Organisation de la présentation</span></a></li></ol></li><li><a href="#grille" class="toc-partie"><span class="toc-n">3.</span><span class="toc-t">Grille d’évaluation</span></a></li><li><a href="#glossaire" class="toc-partie"><span class="toc-n">4.</span><span class="toc-t">Glossaire</span></a></li></ol></nav>
+</div></dialog>
+<dialog class="panneau panneau--droite" id="panneau-accessibilite" aria-labelledby="pa-titre"><div class="panneau-int">
+  <div class="panneau-tete"><h2 id="pa-titre">Accessibilité</h2><button type="button" class="bouton panneau-fermer">Fermer</button></div>
+  <form class="reglages" id="reglages">
+    <fieldset class="reglage"><legend>Taille du texte</legend><label><input type="radio" name="pa-taille" value="100" checked> Normale</label><label><input type="radio" name="pa-taille" value="125"> Grande</label><label><input type="radio" name="pa-taille" value="150"> Très grande</label><label><input type="radio" name="pa-taille" value="200"> Maximale</label></fieldset>
+    <fieldset class="reglage"><legend>Contraste</legend><label><input type="radio" name="pa-contraste" value="normal" checked> Normal</label><label><input type="radio" name="pa-contraste" value="renforce"> Renforcé (noir sur blanc)</label><label><input type="radio" name="pa-contraste" value="inverse"> Inversé (clair sur foncé)</label></fieldset>
+    <fieldset class="reglage"><legend>Couleur du texte</legend><div class="reglage-couleur"><label>Choisir une couleur <input type="color" id="pa-couleur" value="#1a1a1a"></label><button type="button" class="bouton" id="pa-couleur-origine">Couleur d’origine</button></div><p class="reglage-note" id="pa-couleur-note" aria-live="polite"></p></fieldset>
+    <fieldset class="reglage"><legend>Police</legend><label><input type="radio" name="pa-police" value="defaut" checked> Open Sans (par défaut)</label><label><input type="radio" name="pa-police" value="arial"> Arial</label><label><input type="radio" name="pa-police" value="verdana"> Verdana</label><label><input type="radio" name="pa-police" value="atkinson"> Atkinson Hyperlegible</label></fieldset>
+    <button type="button" class="bouton" id="pa-reinitialiser">Réinitialiser</button>
+    <p class="reglage-note">Vos réglages sont conservés sur cet appareil. Les diapositives d’exemple gardent leur apparence, sauf leur taille.</p>
+  </form>
+</div></dialog>
 <main class="page">
   <header class="tete">
     <h1>Une présentation PowerPoint accessible</h1>
@@ -287,10 +366,6 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
     </p>
   </header>
 
-  <nav class="toc" aria-labelledby="toc-titre">
-    <h2 id="toc-titre">Sommaire</h2>
-    <ol><li><a href="#contexte" class="toc-partie"><span class="toc-n">1.</span><span class="toc-t">Contexte</span></a></li><li><a href="#regles" class="toc-partie"><span class="toc-n">2.</span><span class="toc-t">Les règles d’accessibilité pour une présentation</span></a><ol><li><a href="#lisibilite"><span class="toc-n">2.1</span><span class="toc-t">Rendre le texte lisible</span></a></li><li><a href="#reperes"><span class="toc-n">2.2</span><span class="toc-t">Donner des repères</span></a></li><li><a href="#contenu"><span class="toc-n">2.3</span><span class="toc-t">Alléger le contenu</span></a></li><li><a href="#oral"><span class="toc-n">2.4</span><span class="toc-t">Organisation de la présentation</span></a></li></ol></li><li><a href="#grille" class="toc-partie"><span class="toc-n">3.</span><span class="toc-t">Grille d’évaluation</span></a></li><li><a href="#glossaire" class="toc-partie"><span class="toc-n">4.</span><span class="toc-t">Glossaire</span></a></li></ol>
-  </nav>
 
   <section class="partie" id="contexte" aria-labelledby="contexte-titre">
     <h2 id="contexte-titre"><span class="sec-n">1.</span> Contexte</h2>
@@ -931,5 +1006,58 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
 })();
 </script>
 
+<script>
+(function () {
+  var A = window.affichagePage, racine = document.documentElement;
+  var prefs = A.lire();
+  var couleur = document.getElementById('pa-couleur'), note = document.getElementById('pa-couleur-note');
+  var form = document.getElementById('reglages');
+  function ouvrir(idBouton, idPanneau) {
+    var panneau = document.getElementById(idPanneau);
+    document.getElementById(idBouton).addEventListener('click', function () { panneau.showModal(); });
+    panneau.addEventListener('click', function (e) {
+      if (e.target === panneau || e.target.classList.contains('panneau-fermer')) panneau.close();
+    });
+  }
+  ouvrir('ouvrir-sommaire', 'panneau-sommaire');
+  ouvrir('ouvrir-accessibilite', 'panneau-accessibilite');
+  document.querySelectorAll('#panneau-sommaire nav a').forEach(function (a) {
+    a.addEventListener('click', function () { document.getElementById('panneau-sommaire').close(); });
+  });
+  function lum(hex) {
+    var c = [1, 3, 5].map(function (i) {
+      var v = parseInt(hex.substr(i, 2), 16) / 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  function couleurActuelle() {
+    return getComputedStyle(racine).getPropertyValue('--texte').trim().toLowerCase();
+  }
+  function majNote() {
+    var hex = couleurActuelle();
+    couleur.value = hex;
+    var a = lum(hex), b = lum(getComputedStyle(racine).getPropertyValue('--fond').trim());
+    var ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+    note.textContent = 'Contraste avec le fond ' + ratio.toFixed(2).replace('.', ',') + ':1, ' +
+      (ratio >= 4.5 ? 'suffisant.' : 'insuffisant. Choisissez une autre couleur.');
+  }
+  function cocher() {
+    [['pa-taille', prefs.taille || '100'], ['pa-contraste', prefs.contraste || 'normal'], ['pa-police', prefs.police || 'defaut']].forEach(function (x) {
+      var el = form.querySelector('input[name="' + x[0] + '"][value="' + x[1] + '"]');
+      if (el) el.checked = true;
+    });
+  }
+  function maj() { A.appliquer(prefs); A.ecrire(prefs); majNote(); }
+  form.addEventListener('change', function (e) {
+    var cle = { 'pa-taille': 'taille', 'pa-contraste': 'contraste', 'pa-police': 'police' }[e.target.name];
+    if (cle) { prefs[cle] = e.target.value; maj(); }
+  });
+  couleur.addEventListener('input', function () { prefs.couleur = couleur.value; maj(); });
+  document.getElementById('pa-couleur-origine').addEventListener('click', function () { delete prefs.couleur; maj(); });
+  document.getElementById('pa-reinitialiser').addEventListener('click', function () { prefs = {}; cocher(); maj(); });
+  cocher(); majNote();
+})();
+</script>
 </body>
 </html>
