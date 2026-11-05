@@ -45,6 +45,14 @@ html { scroll-padding-top: 5rem; }
   margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding: 10px max(16px, env(safe-area-inset-left, 0px));
   background: var(--fond); border-bottom: 1px solid var(--bord);
 }
+.haut {
+  position: fixed; z-index: 3; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
+  color: var(--fond); background: var(--bleu); border: 2px solid var(--fond); box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+  font-size: 1.5rem; font-weight: 700; line-height: 1; text-decoration: none;
+}
+.haut:hover { background: var(--titre); }
+.haut[hidden] { display: none; }
 .barre-bouton span { font-weight: 700; margin-right: 4px; }
 .panneau {
   width: min(26rem, 100vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0; padding: 0; border: 0;
@@ -801,6 +809,7 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
     <p>Vos notes et commentaires restent dans ce navigateur, sur cet appareil ; rien n'est envoyé.</p>
   </footer>
 </main>
+<a class="haut" id="haut-page" href="#top" aria-label="Revenir en haut de la page" title="Revenir en haut de la page"><span aria-hidden="true">↑</span></a>
 
 <script>
 (function () {
@@ -1022,6 +1031,10 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
 <script>
 (function () {
   var A = window.affichagePage, racine = document.documentElement;
+  var haut = document.getElementById('haut-page');
+  function majHaut() { haut.hidden = window.scrollY < 400; }
+  window.addEventListener('scroll', majHaut, { passive: true });
+  majHaut();
   var prefs = A.lire();
   var couleur = document.getElementById('pa-couleur'), note = document.getElementById('pa-couleur-note');
   var form = document.getElementById('reglages');
