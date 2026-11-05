@@ -164,7 +164,7 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
 .pourquoi-liste { margin: 0; padding-left: 1.4em; color: var(--doux); display: grid; gap: 4px; }
 .pourquoi { color: var(--doux); }
 .etoile { font-size: .9rem; font-weight: 600; color: var(--titre); }
-.etoile span { color: var(--focus); }
+.pastille { display: inline-block; width: .8em; height: .8em; margin-right: .2em; border-radius: 50%; vertical-align: baseline; background: var(--bleu); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .regle.est-faite h3 label { text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: var(--bleu); }
 
 /* --- exemples --- */
@@ -452,10 +452,10 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
         accessible vous sont présentées ci-dessous, avec des exemples. Elles sont
         réparties en quatre thèmes : 1) rendre le texte et le contenu lisibles ;
         2) donner des repères ; 3) alléger le contenu ; 4) organiser la présentation.
-        Elles sont issues d’une synthèse de la littérature et d’un travail académique
+        Ces pratiques sont issues d’une synthèse de la littérature et d’un travail académique
         que vous retrouverez <a href="https://doi.org/10.1080/1034912X.2026.2678833">ici</a>.
-        Les pratiques jugées encore plus pertinentes pour les étudiants autistes sont
-        indiquées avec une étoile <span aria-hidden="true">(★)</span>.
+        Les pratiques jugées particulièrement utiles par les étudiants autistes sont
+        indiquées avec une pastille bleue <span class="pastille" aria-hidden="true"></span>.
       </p>
     </div>
   </section>
@@ -471,7 +471,7 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
     <h4><span class="num">1.</span> Police sans empattement</h4>
     <p class="resume">Arial, Verdana, Calibri plutôt que Times ou Garamond.</p>
     <p class="pourquoi">Les polices sans empattement sont généralement plus faciles à lire pour les personnes ayant des troubles de la lecture ou des difficultés visuelles.</p>
-    <p class="etoile"><span aria-hidden="true">★</span> Jugée plus pertinente encore par les étudiants autistes</p>
+    <p class="etoile"><span class="pastille" aria-hidden="true"></span> Jugée plus pertinente encore par les étudiants autistes</p>
   </div>
   <figure class="exemple" role="img" aria-label="Mauvais exemple : « Police avec empattements », écrit en Times. Bon exemple : « Police sans empattement », écrit en Arial.">
     <div class="duo"><div class="duo-bloc duo-bloc--non"><p class="duo-etq"><span aria-hidden="true">✕</span> Mauvais exemple</p><div class="diapo diapo--centre diapo--serif"><p>Police avec empattements</p></div></div><div class="duo-bloc duo-bloc--oui"><p class="duo-etq"><span aria-hidden="true">✓</span> Bon exemple</p><div class="diapo diapo--centre"><p>Police sans empattement</p></div></div></div>
@@ -586,7 +586,7 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
     <h4><span class="num">9.</span> Afficher le nombre total de diapositives</h4>
     <p class="resume">« 12 / 34 » plutôt que « 12 ».</p>
     <p class="pourquoi">Indiquer le nombre total permet au public d’anticiper la durée restante. Cette information réduit l’anxiété et aide à la gestion de l’attention.</p>
-    <p class="etoile"><span aria-hidden="true">★</span> Jugée plus pertinente encore par les étudiants autistes</p>
+    <p class="etoile"><span class="pastille" aria-hidden="true"></span> Jugée plus pertinente encore par les étudiants autistes</p>
   </div>
   <figure class="exemple" role="img" aria-label="Mauvais exemple : le seul numéro « 12 » en bas à droite. Bon exemple : « 12 / 34 » en bas à droite.">
     <div class="duo"><div class="duo-bloc duo-bloc--non"><p class="duo-etq"><span aria-hidden="true">✕</span> Mauvais exemple</p><div class="diapo"><p class="m-dtitre">Numéro seul</p><p class="m-pied">12</p></div></div><div class="duo-bloc duo-bloc--oui"><p class="duo-etq"><span aria-hidden="true">✓</span> Bon exemple</p><div class="diapo"><p class="m-dtitre">Numéro et total</p><p class="m-pied">12 / 34</p></div></div></div>
@@ -699,7 +699,7 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
     <h4><span class="num">18.</span> Sous-titrage des vidéos</h4>
     <p class="resume">Toutes les vidéos, y compris les extraits courts.</p>
     <p class="pourquoi">Les sous-titres aident les personnes ayant des difficultés de traitement auditif ou de compréhension d’une langue, et permettent un meilleur suivi du contenu.</p>
-    <p class="etoile"><span aria-hidden="true">★</span> Jugée plus pertinente encore par les étudiants autistes</p>
+    <p class="etoile"><span class="pastille" aria-hidden="true"></span> Jugée plus pertinente encore par les étudiants autistes</p>
   </div>
   <figure class="exemple" role="img" aria-label="Exemple de diapositive « Vidéo sous-titrée » : une vidéo avec le sous-titre « Bonjour et bienvenue à tous. »">
     <div class="diapo"><p class="m-dtitre">Vidéo sous-titrée</p><div class="m-corps"><div class="m-video"><span class="m-play">▶</span><span class="m-st">Bonjour et bienvenue à tous.</span></div></div></div>
@@ -751,7 +751,7 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
     <h4><span class="num">22.</span> Support annotable</h4>
     <p class="resume">Une version à trous, ou avec une colonne de notes.</p>
     <p class="pourquoi">Écouter et noter en même temps est coûteux. Un support annotable permet de suivre sans avoir à tout retranscrire. C’est l’une des pratiques les mieux notées par les étudiants autistes.</p>
-    <p class="etoile"><span aria-hidden="true">★</span> Jugée plus pertinente encore par les étudiants autistes</p>
+    <p class="etoile"><span class="pastille" aria-hidden="true"></span> Jugée plus pertinente encore par les étudiants autistes</p>
     
   </div>
   <figure class="exemple" role="img" aria-label="Exemple de diapositive « Support annotable » : trois points à gauche et une colonne « Vos notes » à droite pour écrire.">
