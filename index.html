@@ -53,6 +53,7 @@ html { scroll-padding-top: 5rem; }
 }
 .haut:hover { background: var(--titre); }
 .haut[hidden] { display: none; }
+.toc-impression { display: none; }
 .barre-cote { flex: 1 1 0; min-width: max-content; display: flex; }
 .barre-cote--droite { justify-content: flex-end; gap: 8px; }
 .barre .barre-bouton--icone { display: inline-grid; place-items: center; padding: 8px 10px; }
@@ -343,7 +344,8 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
   body { padding: 0; }
   .barre, .haut, .evitement, .panneau, .aide, .outil--widget, .actions, .export-etat, .score, .grille-titre-pres { display: none !important; }
   .page { max-width: none; padding: 0; }
-  #regles { break-before: page; }
+  .toc-impression { display: block; margin-top: calc(var(--pas) * 4); }
+  .toc-impression h2 { font-size: 1.4rem; margin-bottom: calc(var(--pas) * 1.5); }
   h2 { break-inside: avoid; }
   h2, h3, h4, .duo-etq { break-after: avoid; }
   .regle, .grille tr { break-inside: avoid; }
@@ -426,6 +428,8 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
     </p>
   </header>
 
+
+  <div class="toc toc-impression" id="toc-impression"><h2>Sommaire</h2></div>
 
   <section class="partie" id="contexte" aria-labelledby="contexte-titre">
     <h2 id="contexte-titre"><span class="sec-n">1.</span> Contexte</h2>
@@ -1102,6 +1106,7 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
   ouvrir('ouvrir-accessibilite', 'panneau-accessibilite');
   ouvrir('ouvrir-telechargement', 'panneau-telechargement');
   document.getElementById('lien-pdf').addEventListener('click', function () { document.getElementById('panneau-telechargement').close(); });
+  document.getElementById('toc-impression').appendChild(document.querySelector('#panneau-sommaire nav ol').cloneNode(true));
   var repliees = [];
   window.addEventListener('beforeprint', function () {
     repliees = Array.prototype.filter.call(document.querySelectorAll('details'), function (d) { return !d.open; });
