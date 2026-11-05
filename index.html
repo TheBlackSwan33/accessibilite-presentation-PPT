@@ -41,8 +41,8 @@ html { scroll-padding-top: 5rem; }
   --focus: #FFB366; color-scheme: dark;
 }
 .barre {
-  position: sticky; top: 0; z-index: 4; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
-  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding: 10px max(16px, env(safe-area-inset-left, 0px));
+  position: sticky; top: 0; z-index: 4; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding: 6px max(16px, env(safe-area-inset-left, 0px));
   background: var(--fond); border-bottom: 1px solid var(--bord);
 }
 .haut {
@@ -53,6 +53,18 @@ html { scroll-padding-top: 5rem; }
 }
 .haut:hover { background: var(--titre); }
 .haut[hidden] { display: none; }
+.barre-cote { flex: 1 1 0; min-width: max-content; display: flex; }
+.barre-cote--droite { justify-content: flex-end; }
+.barre-logo { flex: none; display: block; width: 56px; height: 56px; }
+@media (max-width: 440px) {
+  .barre-logo { width: 44px; height: 44px; }
+  .barre .barre-bouton { padding: 6px 10px; font-size: .88rem; }
+  #ouvrir-accessibilite span { display: none; }
+}
+@media (max-width: 350px) {
+  .barre { gap: 4px; }
+  .barre-logo { width: 36px; height: 36px; }
+}
 .barre-bouton span { font-weight: 700; margin-right: 4px; }
 .panneau {
   width: min(26rem, 100vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0; padding: 0; border: 0;
@@ -350,8 +362,9 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
 
 <a class="evitement" href="#regles">Aller aux règles</a>
 <div class="barre">
-  <button type="button" class="bouton barre-bouton" id="ouvrir-sommaire" aria-haspopup="dialog"><span aria-hidden="true">☰</span> Sommaire</button>
-  <button type="button" class="bouton barre-bouton" id="ouvrir-accessibilite" aria-haspopup="dialog"><span aria-hidden="true">Aa</span> Accessibilité</button>
+  <div class="barre-cote"><button type="button" class="bouton barre-bouton" id="ouvrir-sommaire" aria-haspopup="dialog"><span aria-hidden="true">☰</span> Sommaire</button></div>
+  <img class="barre-logo" src="logo-atypie-friendly.png" alt="Atypie-Friendly, Université de Bordeaux" width="56" height="56">
+  <div class="barre-cote barre-cote--droite"><button type="button" class="bouton barre-bouton" id="ouvrir-accessibilite" aria-haspopup="dialog"><span aria-hidden="true">Aa</span> Accessibilité</button></div>
 </div>
 <dialog class="panneau panneau--gauche" id="panneau-sommaire" aria-labelledby="toc-titre"><div class="panneau-int">
   <div class="panneau-tete"><h2 id="toc-titre">Sommaire</h2><button type="button" class="bouton panneau-fermer">Fermer</button></div>
