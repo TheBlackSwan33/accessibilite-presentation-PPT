@@ -153,6 +153,7 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
   flex: none; width: 26px; height: 26px; margin: 1px 0 0; cursor: pointer; accent-color: var(--bleu);
 }
 .resume { font-weight: 700; color: var(--texte); }
+.pourquoi-liste { margin: 0; padding-left: 1.4em; color: var(--doux); display: grid; gap: 4px; }
 .pourquoi { color: var(--doux); }
 .etoile { font-size: .9rem; font-weight: 600; color: var(--titre); }
 .etoile span { color: var(--focus); }
@@ -521,8 +522,9 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
 <li class="regle" id="pp-couleurs">
   <div class="regle-texte">
     <h4><span class="num">6.</span> Information distinguable par tous</h4>
-    <p class="resume">L’information doit être distinguable par tous, même sans voir les couleurs.</p>
-    <p class="pourquoi">Certaines personnes ne distinguent pas bien certaines couleurs, par exemple en cas de daltonisme. Si seule la couleur porte l’information, elles ne peuvent pas la comprendre. Ajoutez donc un second indice : un motif, un symbole ou un texte.</p>
+    <p class="resume">L’information donnée par un graphique, un schéma, une image, etc. doit être distinguable par tous.</p>
+    <p class="pourquoi">Vérifiez donc :</p>
+    <ol class="pourquoi-liste"><li>que les couleurs utilisées entre les différents éléments sont bien distinctes ;</li><li>qu’il y a un autre indice que la couleur pour distinguer l’information : un motif, un symbole ou un texte.</li></ol>
     
   </div>
   <figure class="exemple" role="img" aria-label="Mauvais exemple : un graphique en barres où le groupe A est en vert et le groupe B en rouge, sans autre indice ; une personne daltonienne risque de les confondre. Bon exemple : le même graphique avec des barres vertes pleines marquées A et des barres rouges hachurées marquées B.">
