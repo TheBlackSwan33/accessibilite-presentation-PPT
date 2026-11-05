@@ -54,12 +54,19 @@ html { scroll-padding-top: 5rem; }
 .haut:hover { background: var(--titre); }
 .haut[hidden] { display: none; }
 .barre-cote { flex: 1 1 0; min-width: max-content; display: flex; }
-.barre-cote--droite { justify-content: flex-end; }
+.barre-cote--droite { justify-content: flex-end; gap: 8px; }
+.barre .barre-bouton--icone { display: inline-grid; place-items: center; padding: 8px 10px; }
+.panneau.panneau--centre { width: min(30rem, calc(100vw - 32px)); height: auto; max-height: 90dvh; margin: auto; border: 1px solid var(--bord); border-radius: 14px 6px 12px 7px; }
+.panneau.panneau--centre .panneau-int { min-height: 0; }
+.panneau--centre .panneau-tete { flex-wrap: nowrap; align-items: flex-start; }
+.panneau--centre .panneau-tete h2 { flex: 1 1 0; min-width: 0; }
+.bouton--lien { display: block; text-align: center; text-decoration: none; }
 .barre-logo { flex: none; display: block; width: 56px; height: 56px; }
 @media (max-width: 440px) {
   .barre-logo { width: 44px; height: 44px; }
   .barre .barre-bouton { padding: 6px 10px; font-size: .88rem; }
-  #ouvrir-accessibilite span { display: none; }
+  .barre-libelle { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .barre .barre-bouton--icone { padding: 6px 8px; }
 }
 @media (max-width: 350px) {
   .barre { gap: 4px; }
@@ -329,6 +336,27 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
 .pied-page { margin-top: calc(var(--pas) * 10); padding-top: calc(var(--pas) * 3); border-top: 1px solid var(--bord); color: var(--doux); font-size: .92rem; display: grid; gap: var(--pas); }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+@page { size: A4; margin: 14mm; }
+@media print {
+  :root { --fond: #FFFFFF; --surface: #F2F2F2; }
+  html { font-size: 13px; scroll-padding-top: 0; }
+  body { padding: 0; }
+  .barre, .haut, .evitement, .panneau, .aide, .outil--widget, .actions, .export-etat, .score, .grille-titre-pres { display: none !important; }
+  .page { max-width: none; padding: 0; }
+  #regles { break-before: page; }
+  h2 { break-inside: avoid; }
+  h2, h3, h4, .duo-etq { break-after: avoid; }
+  .regle, .grille tr { break-inside: avoid; }
+  .duo { grid-template-columns: 1fr 1fr; }
+  .exemple > .diapo, .exemple > .m-doc, .exemple > .m-mail { max-width: calc(50% - 6px); }
+  .diapo, .m-doc { min-height: 9rem; }
+  .verifier-titre { list-style: none; cursor: auto; padding-bottom: 6px; }
+  .verifier-titre::-webkit-details-marker { display: none; }
+  .table-boite { overflow: visible; }
+  .grille table { min-width: 0; }
+  .grille thead th { position: static; }
+  .grille td.col-com { min-width: 8rem; }
+}
 </style>
 <script>
 (function () {
@@ -366,11 +394,16 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
 <div class="barre">
   <div class="barre-cote"><button type="button" class="bouton barre-bouton" id="ouvrir-sommaire" aria-haspopup="dialog"><span aria-hidden="true">☰</span> Sommaire</button></div>
   <img class="barre-logo" src="logo-atypie-friendly.png" alt="Atypie-Friendly, Université de Bordeaux" width="56" height="56">
-  <div class="barre-cote barre-cote--droite"><button type="button" class="bouton barre-bouton" id="ouvrir-accessibilite" aria-haspopup="dialog"><span aria-hidden="true">Aa</span> Accessibilité</button></div>
+  <div class="barre-cote barre-cote--droite"><button type="button" class="bouton barre-bouton barre-bouton--icone" id="ouvrir-telechargement" aria-haspopup="dialog" aria-label="Télécharger la page en PDF" title="Télécharger la page en PDF"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3v12M7 10.5 12 15.5l5-5M4 20.5h16"/></svg></button><button type="button" class="bouton barre-bouton" id="ouvrir-accessibilite" aria-haspopup="dialog"><span aria-hidden="true">Aa</span> <span class="barre-libelle">Accessibilité</span></button></div>
 </div>
 <dialog class="panneau panneau--gauche" id="panneau-sommaire" aria-labelledby="toc-titre"><div class="panneau-int">
   <div class="panneau-tete"><h2 id="toc-titre">Sommaire</h2><button type="button" class="bouton panneau-fermer">Fermer</button></div>
   <nav class="toc" aria-labelledby="toc-titre"><ol><li><a href="#contexte" class="toc-partie"><span class="toc-n">1.</span><span class="toc-t">Contexte</span></a></li><li><a href="#regles" class="toc-partie"><span class="toc-n">2.</span><span class="toc-t">Les règles d’accessibilité pour une présentation</span></a><ol><li><a href="#lisibilite"><span class="toc-n">2.1</span><span class="toc-t">Rendre le texte et le contenu lisibles</span></a></li><li><a href="#reperes"><span class="toc-n">2.2</span><span class="toc-t">Donner des repères</span></a></li><li><a href="#contenu"><span class="toc-n">2.3</span><span class="toc-t">Alléger le contenu</span></a></li><li><a href="#oral"><span class="toc-n">2.4</span><span class="toc-t">Organiser la présentation</span></a></li></ol></li><li><a href="#grille" class="toc-partie"><span class="toc-n">3.</span><span class="toc-t">Grille d’évaluation</span></a></li><li><a href="#glossaire" class="toc-partie"><span class="toc-n">4.</span><span class="toc-t">Glossaire</span></a></li></ol></nav>
+</div></dialog>
+<dialog class="panneau panneau--centre" id="panneau-telechargement" aria-labelledby="dl-titre"><div class="panneau-int">
+  <div class="panneau-tete"><h2 id="dl-titre">Ce contenu vous a plus ? Conservez-le !</h2><button type="button" class="bouton panneau-fermer">Fermer</button></div>
+  <p>Téléchargez le contenu entier de la page au format PDF.</p>
+  <a class="bouton bouton--plein bouton--lien" id="lien-pdf" href="presentation-powerpoint-accessible.pdf" download>Télécharger en PDF</a>
 </div></dialog>
 <dialog class="panneau panneau--droite" id="panneau-accessibilite" aria-labelledby="pa-titre"><div class="panneau-int">
   <div class="panneau-tete"><h2 id="pa-titre">Accessibilité</h2><button type="button" class="bouton panneau-fermer">Fermer</button></div>
@@ -1067,6 +1100,14 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
   }
   ouvrir('ouvrir-sommaire', 'panneau-sommaire');
   ouvrir('ouvrir-accessibilite', 'panneau-accessibilite');
+  ouvrir('ouvrir-telechargement', 'panneau-telechargement');
+  document.getElementById('lien-pdf').addEventListener('click', function () { document.getElementById('panneau-telechargement').close(); });
+  var repliees = [];
+  window.addEventListener('beforeprint', function () {
+    repliees = Array.prototype.filter.call(document.querySelectorAll('details'), function (d) { return !d.open; });
+    repliees.forEach(function (d) { d.open = true; });
+  });
+  window.addEventListener('afterprint', function () { repliees.forEach(function (d) { d.open = false; }); });
   document.querySelectorAll('#panneau-sommaire nav a').forEach(function (a) {
     a.addEventListener('click', function () { document.getElementById('panneau-sommaire').close(); });
   });
