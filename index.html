@@ -284,6 +284,10 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
 .regle h4 { font-size: 1.2rem; color: var(--titre); line-height: 1.3; margin: 0; text-wrap: balance; }
 .contexte { display: grid; gap: calc(var(--pas) * 2); margin-top: calc(var(--pas) * 3); }
 .contexte cite { font-style: italic; }
+.reseaux { display: flex; flex-wrap: wrap; gap: 8px 24px; list-style: none; margin: 0; padding: 0; }
+.reseaux a { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; font-weight: 600; }
+.reseaux img { display: block; flex: none; width: 1.4em; height: 1.4em; }
+:root[data-contraste="inverse"] .reseaux img { filter: invert(1); }
 .glossaire { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr)); gap: calc(var(--pas) * 2) calc(var(--pas) * 4); margin: calc(var(--pas) * 3) 0 0; }
 .gl-terme { border-top: 1px solid var(--bord); padding-top: 10px; }
 .gl-terme dt { font-weight: 700; color: var(--titre); }
@@ -371,34 +375,43 @@ h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.01
     <h2 id="contexte-titre"><span class="sec-n">1.</span> Contexte</h2>
     <div class="contexte">
       <p>
-        Cette page a été conçue dans le cadre du programme Atypie-Friendly,
-        <a href="https://www.u-bordeaux.fr/universite/nos-engagements/atypie-friendly-inclure-les-profils-neuroatypiques">à l'université de Bordeaux</a>
-        et <a href="https://atypie-friendly.fr/">au niveau national</a>. Ce programme
+        Cette page a été conçue par l'équipe locale du programme Atypie-Friendly
+        de l'Université de Bordeaux. Atypie-Friendly est un programme national qui
         vise à améliorer l'inclusion des étudiants et des personnels avec un
-        trouble du neurodéveloppement (TND).
+        trouble du neurodéveloppement (TND). Pour plus d'informations, vous pouvez
+        retrouver nos différentes actions sur
+        <a href="https://www.u-bordeaux.fr/universite/nos-engagements/atypie-friendly-inclure-les-profils-neuroatypiques">notre page</a>
+        et nos réseaux sociaux.
       </p>
+      <ul class="reseaux">
+        <li><a href="https://www.instagram.com/atypiefriendly_uni_bdx/"><img src="https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/instagram.svg" alt="" width="24" height="24"> Instagram</a></li>
+        <li><a href="https://www.tiktok.com/@atypiefriendly_uni_bdx"><img src="https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/tiktok.svg" alt="" width="24" height="24"> TikTok</a></li>
+      </ul>
       <p>
-        Les points recensés sont issus de l'article de Laronze et N'kaoua (2026),
+        Les différentes pratiques recensées sont issues d'un travail réalisé par
+        Laronze et N'kaoua (2026),
         <a href="https://doi.org/10.1080/1034912X.2026.2678833" lang="en">« Evaluation of the Relevance and Effective Implementation of Pedagogical Practices for Students on the Autism Spectrum at University »</a>,
         publié dans l'<cite lang="en">International Journal of Disability, Development and Education</cite>.
-        L'étude a interrogé 431 étudiants, dont 18 étudiants autistes. Elle leur
-        a soumis 54 pratiques pédagogiques inclusives, réparties en quatre thèmes :
-        le PowerPoint, les informations et règles, l'organisation et le contenu,
-        les stratégies d'engagement. Elle évalue à la fois la pertinence de ces
-        pratiques et leur mise en place effective.
+        L'objectif de ce travail était d'interroger 431 étudiants, dont 18 étudiants
+        autistes, sur 54 pratiques pédagogiques, réparties en quatre thèmes :
+        le PowerPoint, les informations et règles de cours, l'organisation et le
+        contenu du cours, les stratégies d'engagement. Pour chaque pratique, les
+        étudiants devaient évaluer via des échelles de Likert si elle était mise en
+        place dans leurs cours universitaires, et s'ils trouvaient cette pratique
+        pertinente.
       </p>
       <p>
-        Toutes les pratiques ont été jugées pertinentes, et les thèmes du
-        PowerPoint et des informations et règles arrivent en tête. Onze pratiques
-        ont été jugées significativement plus pertinentes encore par les
-        étudiants autistes que par les autres étudiants : ce sont celles
-        marquées d'une étoile <span aria-hidden="true">(★)</span> sur cette page.
+        Les résultats montrent que l'ensemble des pratiques étaient jugées
+        pertinentes par l'ensemble des étudiants. Onze pratiques ont été jugées
+        significativement plus pertinentes encore par les étudiants autistes que
+        par les autres étudiants, elles sont indiquées avec une étoile
+        <span aria-hidden="true">(★)</span> sur cette page.
       </p>
       <p>
-        Cette page reprend les 18 pratiques du thème PowerPoint et sept pratiques
-        liées à la façon de présenter, adaptées à toute présentation, qu'elle
-        soit faite par un enseignant ou par des étudiants. Les exemples ont été
-        rédigés pour ce document et ne figurent pas dans l'article.
+        Cette page reprend les 18 pratiques du thème « PowerPoint » et sept
+        pratiques du thème « Organisation et contenu du cours », adaptées pour une
+        présentation PPT (plus vaste qu'un cours). Les exemples ont été rédigés
+        pour ce document et ne figurent pas dans l'article.
       </p>
     </div>
   </section>
